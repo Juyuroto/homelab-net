@@ -1,88 +1,76 @@
 # homelab-net
 
-Plugin [Claude Code](https://claude.com/claude-code) pour concevoir, auditer et dépanner le réseau d'un homelab : VLAN et plan d'adressage, pfSense, accès distant OpenVPN, reverse proxy Traefik + CrowdSec, bridges Proxmox.
+Plugin [Claude Code](https://claude.com/claude-code) pour concevoir, auditer et dépanner le réseau d'un homelab.
 
-Deux principes :
-
-- **Rien n'est modifié sans votre « oui ».** Claude lance lui-même les commandes d'observation ; toute commande qui modifie une config (pfSense, switch, Proxmox, pare-feu) est proposée, expliquée, et attend votre validation.
+- **Rien n'est modifié sans votre « oui ».** Claude lance seul les commandes d'observation ; toute commande qui modifie une config est proposée, expliquée, puis attend votre validation.
 - **Votre topologie reste chez vous.** Elle vit dans un fichier privé hors de tout repo. Ce dépôt ne contient que des exemples fictifs.
 
 ## Installation
 
-Dans Claude Code :
+Le dépôt s'appelle `homelab-net`, le plugin `lab` : ses commandes sont donc `/lab:...`.
 
 ```
 /plugin marketplace add Juyuroto/homelab-net
 /plugin install lab@homelab-net
 ```
 
-Pour tester une copie locale sans l'installer : `claude --plugin-dir /chemin/vers/homelab-net`.
+Test d'une copie locale, sans installer : `claude --plugin-dir /chemin/vers/homelab-net`.
 
-## Créer votre topology.md
+## Démarrage rapide
 
-Le plugin fonctionne sans, mais devient utile avec :
+**1. Votre topologie** (le plugin fonctionne sans, mais devient utile avec) :
 
 ```bash
 mkdir -p ~/.claude/homelab-net
-cp templates/topology.example.md ~/.claude/homelab-net/topology.md
+curl -o ~/.claude/homelab-net/topology.md https://raw.githubusercontent.com/Juyuroto/homelab-net/main/templates/topology.example.md
 chmod 600 ~/.claude/homelab-net/topology.md
 ```
 
-Remplacez ensuite toutes les valeurs d'exemple par les vôtres. Gardez les titres de sections (`## VLANs` en particulier) : le résumé injecté au démarrage s'appuie dessus. N'y mettez pas de secrets (mots de passe, clés, tokens), seulement la structure du réseau.
+Remplacez les valeurs d'exemple par les vôtres et gardez les titres de sections (`## VLANs` en particulier). Pas de secrets dedans, seulement la structure du réseau.
 
-Après installation par marketplace, le modèle se trouve dans le dossier du plugin sous `~/.claude/plugins/` ; le plus simple est de le copier depuis ce dépôt.
-
-## Accès à Proxmox
-
-`/pve-create`, `/pve-manage` et `/net-debug` joignent Proxmox par son API, avec un jeton que vous créez (Datacenter > Permissions > API Tokens) et rangez à côté de la topologie :
+**2. Proxmox** (pour `pve-create`, `pve-manage`, `net-debug`) : créez un jeton d'API (Datacenter > Permissions > API Tokens) et rangez-le à côté de la topologie :
 
 ```bash
-cat > ~/.claude/homelab-net/proxmox.env <<'EOF'
-PVE_HOST=pve1.example.lan
+nano ~/.claude/homelab-net/proxmox.env
+```
+
+et mettre dans un `.env`
+
+```.env
+PVE_HOST=192.168.1.1 ou pve1.example.lan
 PVE_TOKEN_ID=utilisateur@pve!jeton
 PVE_TOKEN_SECRET=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-EOF
+```
+
+Définir des droits sur le fichier
+
+```bash
 chmod 600 ~/.claude/homelab-net/proxmox.env
 ```
 
-Donnez au jeton le rôle le plus étroit qui suffit (`PVEAuditor` pour observer, `PVEVMAdmin` pour créer et gérer). Sans `PVE_CACERT=/chemin/pve-root-ca.pem` dans ce fichier, le certificat du nœud n'est pas vérifié. Sans ce fichier, les commandes sont proposées et c'est vous qui les lancez.
+- Rôle le plus étroit possible : `PVEAuditor` pour observer, `PVEVMAdmin` pour créer et gérer.
+- Sans `PVE_CACERT=/chemin/pve-root-ca.pem`, le certificat du nœud n'est pas vérifié.
+- Sans ce fichier, les commandes sont proposées et c'est vous qui les lancez.
 
 ## Commandes
 
 | Commande | Rôle |
 |----------|------|
-| `/lab:net-audit` | Lit `topology.md` et liste les risques (exposition, segmentation, VPN trop large, services en `0.0.0.0`) par gravité, avec la correction proposée |
-| `/lab:net-debug <symptôme>` | Dépannage guidé couche par couche : il lance lui-même les commandes de diagnostic en lecture seule et pose des questions |
-| `/lab:net-plan <besoin>` | Plan d'intégration d'un besoin (ex. VLAN caméras) : VLAN, adressage, règles de pare-feu, impact |
-| `/lab:net-add <élément>` | Ajoute une machine ou un service à `topology.md` : IP libre proposée, conflits vérifiés, écriture après validation |
-| `/lab:net-check` | Vérifie `topology.md` lui-même : contradictions entre sections, IP en double ou hors plage, références non déclarées, champs manquants |
-| `/lab:pve-create <ressource>` | Prépare la création d'une VM, d'un conteneur LXC ou d'un clone sur Proxmox : VMID, IP, stockage et bridge/VLAN vérifiés, commande proposée, exécution après validation |
-| `/lab:pve-manage <action> <vmid>` | Agit sur une VM ou un conteneur existant : démarrer, arrêter, modifier, snapshot, sauvegarde, migration, suppression. Récapitulatif puis exécution après validation |
-| `/lab:net-version [version]` | Historique de `topology.md` : lister les versions datées, en enregistrer une, comparer, revenir à une version précédente |
-| `/lab:net-fw <source> -> <destination>:<port>` | Simule un flux contre les règles pfSense de la topologie : passe ou bloqué, avec la règle qui décide |
-| `/lab:net-backup` | Vérifie que Proxmox, pfSense et la topologie ont une sauvegarde récente, et liste ce qui n'en a pas |
+| `/lab:net-audit` | Risques de la topologie (exposition, segmentation, VPN trop large…), par gravité |
+| `/lab:net-debug <symptôme>` | Dépannage couche par couche, diagnostic en lecture seule |
+| `/lab:net-plan <besoin>` | Plan d'intégration d'un besoin (ex. VLAN caméras) : adressage, pare-feu, impact |
+| `/lab:net-add <élément>` | Ajoute une machine ou un service à `topology.md` |
+| `/lab:net-check` | Contrôle `topology.md` : contradictions, IP en double, références manquantes |
+| `/lab:net-fw <source> -> <destination>:<port>` | Simule un flux contre les règles pfSense : passe ou bloqué, et pourquoi |
+| `/lab:net-backup` | Liste ce qui n'a pas de sauvegarde récente (Proxmox, pfSense, topologie) |
+| `/lab:net-version [version]` | Historique de `topology.md` : lister, enregistrer, comparer, revenir en arrière |
+| `/lab:pve-create <ressource>` | Prépare une VM, un LXC ou un clone ; exécution après validation |
+| `/lab:pve-manage <action> <vmid>` | Démarrer, arrêter, modifier, snapshot, sauvegarde, migration, suppression ; exécution après validation |
 
-La forme courte (`/net-audit`, etc.) fonctionne aussi tant qu'aucune autre commande ne porte ce nom.
+La forme courte (`/net-audit`…) fonctionne tant qu'aucune autre commande ne porte ce nom.
 
-Le skill `reseau-homelab` se charge de lui-même dès qu'une question porte sur le réseau ; ses fiches détaillées (`skills/reseau-homelab/references/`) ne sont lues qu'à la demande.
+## Fonctionnement
 
-## Hook de démarrage
-
-À chaque début de session, si `~/.claude/homelab-net/topology.md` existe, un court résumé est ajouté au contexte : titres des sections avec leur numéro de ligne et tableau des VLAN, 2000 caractères au plus. Le fichier complet n'est lu que lorsqu'une commande en a besoin. Sans fichier, le hook ne fait rien.
-
-## Versions de la topologie
-
-`topology.md` est toujours le fichier actif. `/net-add` en garde une copie avant et après chaque ajout dans `~/.claude/homelab-net/versions/<date>/topology.md` ; `/net-version` liste ces copies et réactive celle que vous choisissez, après avoir sauvegardé l'état courant. Une modification faite à la main est donc suivie comme les autres, et jamais écrasée.
-
-## Ce qu'il ne faut jamais commiter
-
-- `topology.md` ou toute copie remplie du modèle ;
-- des IP, noms d'hôtes, noms de domaine, ports ou adresses MAC réels, y compris dans une issue, un exemple ou une capture d'écran ;
-- des exports de configuration (pfSense `config.xml`, `/etc/network/interfaces`, profils `.ovpn`) ;
-- des secrets : `.env`, clés et certificats VPN, clés de bouncer CrowdSec, tokens d'API.
-
-Le `.gitignore` bloque `topology.md`, `*.local.md`, `.env` et `proxmox.env`, mais ce n'est qu'un filet : relisez `git diff --staged` avant chaque commit. Dans ce dépôt, les exemples n'utilisent que `10.0.X.0/24`, les plages RFC 5737 (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`) et les noms `*.example.lan` / `*.example.com`.
-
-## Contribuer / mettre à jour
-
-`claude plugin validate .` vérifie la structure. Le champ `version` de `.claude-plugin/plugin.json` doit être incrémenté pour que les installations existantes reçoivent une mise à jour.
+- **Skill `reseau-homelab`** : se charge seul dès qu'une question porte sur le réseau ; ses fiches (`skills/reseau-homelab/references/`) ne sont lues qu'à la demande.
+- **Hook de démarrage** : si `~/.claude/homelab-net/topology.md` existe, un résumé (sections avec numéro de ligne, tableau des VLAN, 2000 caractères max) est ajouté au contexte. Le fichier complet n'est lu qu'au besoin.
+- **Versions** : `net-add` garde une copie avant et après chaque ajout dans `~/.claude/homelab-net/versions/<date>/`. `net-version` réactive celle que vous choisissez, après avoir sauvegardé l'état courant : une modification manuelle n'est jamais écrasée.
