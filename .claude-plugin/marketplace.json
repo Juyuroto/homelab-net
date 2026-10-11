@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "homelab-net",
+      "name": "lab",
       "source": "./",
       "description": "Concevoir, auditer et dépanner un réseau de homelab (VLAN, pfSense, OpenVPN, Traefik/CrowdSec, Proxmox)."
     }

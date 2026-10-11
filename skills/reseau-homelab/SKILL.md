@@ -40,11 +40,11 @@ Ne charger une référence que lorsque la question la concerne.
 
 ## Commandes du plugin
 
-- `/homelab-net:net-audit` — risques de la topologie, classés par gravité.
-- `/homelab-net:net-debug <symptôme>` — dépannage guidé couche par couche.
-- `/homelab-net:net-plan <besoin>` — intégrer un nouveau besoin.
-- `/homelab-net:net-add <élément>` — ajouter une machine ou un service à la topologie.
-- `/homelab-net:net-check` — contradictions et manques du fichier de topologie.
-- `/homelab-net:net-version [version]` — historique de la topologie, retour à une version précédente.
-- `/homelab-net:pve-create <ressource>` — créer une VM, un conteneur ou un clone sur Proxmox.
-- `/homelab-net:pve-manage <action> <vmid>` — démarrer, arrêter, modifier, snapshotter, sauvegarder ou supprimer une VM ou un conteneur.
+- `/lab:net-audit` — risques de la topologie, classés par gravité.
+- `/lab:net-debug <symptôme>` — dépannage guidé couche par couche.
+- `/lab:net-plan <besoin>` — intégrer un nouveau besoin.
+- `/lab:net-add <élément>` — ajouter une machine ou un service à la topologie.
+- `/lab:net-check` — contradictions et manques du fichier de topologie.
+- `/lab:net-version [version]` — historique de la topologie, retour à une version précédente.
+- `/lab:pve-create <ressource>` — créer une VM, un conteneur ou un clone sur Proxmox.
+- `/lab:pve-manage <action> <vmid>` — démarrer, arrêter, modifier, snapshotter, sauvegarder ou supprimer une VM ou un conteneur.

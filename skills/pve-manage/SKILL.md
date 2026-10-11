@@ -17,7 +17,7 @@ Même accès à Proxmox et mêmes règles que `pve-create` : l'observation se la
    - **Oui** : exécuter sans autre question, vérifier en lecture seule (`qm status`, `qm config`, `qm listsnapshot`…) et dire le résultat. Une commande qui échoue arrête la suite : montrer l'erreur, ne rien rattraper par une autre commande non validée.
    - **Non** : ne rien exécuter, demander ce qu'il faut changer.
    - Plusieurs cibles : un seul récapitulatif qui les liste toutes, une seule question.
-5. Si la ressource a été supprimée, renommée, ou a changé d'IP, de VLAN ou de nœud : renvoyer vers `/homelab-net:net-add` pour mettre la topologie à jour.
+5. Si la ressource a été supprimée, renommée, ou a changé d'IP, de VLAN ou de nœud : renvoyer vers `/lab:net-add` pour mettre la topologie à jour.
 
 ## Ce que le récapitulatif doit dire
 

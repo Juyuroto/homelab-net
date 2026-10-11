@@ -13,7 +13,7 @@ Dans Claude Code :
 
 ```
 /plugin marketplace add Juyuroto/homelab-net
-/plugin install homelab-net@homelab-net
+/plugin install lab@homelab-net
 ```
 
 Pour tester une copie locale sans l'installer : `claude --plugin-dir /chemin/vers/homelab-net`.
@@ -51,16 +51,16 @@ Donnez au jeton le rôle le plus étroit qui suffit (`PVEAuditor` pour observer,
 
 | Commande | Rôle |
 |----------|------|
-| `/homelab-net:net-audit` | Lit `topology.md` et liste les risques (exposition, segmentation, VPN trop large, services en `0.0.0.0`) par gravité, avec la correction proposée |
-| `/homelab-net:net-debug <symptôme>` | Dépannage guidé couche par couche : il lance lui-même les commandes de diagnostic en lecture seule et pose des questions |
-| `/homelab-net:net-plan <besoin>` | Plan d'intégration d'un besoin (ex. VLAN caméras) : VLAN, adressage, règles de pare-feu, impact |
-| `/homelab-net:net-add <élément>` | Ajoute une machine ou un service à `topology.md` : IP libre proposée, conflits vérifiés, écriture après validation |
-| `/homelab-net:net-check` | Vérifie `topology.md` lui-même : contradictions entre sections, IP en double ou hors plage, références non déclarées, champs manquants |
-| `/homelab-net:pve-create <ressource>` | Prépare la création d'une VM, d'un conteneur LXC ou d'un clone sur Proxmox : VMID, IP, stockage et bridge/VLAN vérifiés, commande proposée, exécution après validation |
-| `/homelab-net:pve-manage <action> <vmid>` | Agit sur une VM ou un conteneur existant : démarrer, arrêter, modifier, snapshot, sauvegarde, migration, suppression. Récapitulatif puis exécution après validation |
-| `/homelab-net:net-version [version]` | Historique de `topology.md` : lister les versions datées, en enregistrer une, comparer, revenir à une version précédente |
-| `/homelab-net:net-fw <source> -> <destination>:<port>` | Simule un flux contre les règles pfSense de la topologie : passe ou bloqué, avec la règle qui décide |
-| `/homelab-net:net-backup` | Vérifie que Proxmox, pfSense et la topologie ont une sauvegarde récente, et liste ce qui n'en a pas |
+| `/lab:net-audit` | Lit `topology.md` et liste les risques (exposition, segmentation, VPN trop large, services en `0.0.0.0`) par gravité, avec la correction proposée |
+| `/lab:net-debug <symptôme>` | Dépannage guidé couche par couche : il lance lui-même les commandes de diagnostic en lecture seule et pose des questions |
+| `/lab:net-plan <besoin>` | Plan d'intégration d'un besoin (ex. VLAN caméras) : VLAN, adressage, règles de pare-feu, impact |
+| `/lab:net-add <élément>` | Ajoute une machine ou un service à `topology.md` : IP libre proposée, conflits vérifiés, écriture après validation |
+| `/lab:net-check` | Vérifie `topology.md` lui-même : contradictions entre sections, IP en double ou hors plage, références non déclarées, champs manquants |
+| `/lab:pve-create <ressource>` | Prépare la création d'une VM, d'un conteneur LXC ou d'un clone sur Proxmox : VMID, IP, stockage et bridge/VLAN vérifiés, commande proposée, exécution après validation |
+| `/lab:pve-manage <action> <vmid>` | Agit sur une VM ou un conteneur existant : démarrer, arrêter, modifier, snapshot, sauvegarde, migration, suppression. Récapitulatif puis exécution après validation |
+| `/lab:net-version [version]` | Historique de `topology.md` : lister les versions datées, en enregistrer une, comparer, revenir à une version précédente |
+| `/lab:net-fw <source> -> <destination>:<port>` | Simule un flux contre les règles pfSense de la topologie : passe ou bloqué, avec la règle qui décide |
+| `/lab:net-backup` | Vérifie que Proxmox, pfSense et la topologie ont une sauvegarde récente, et liste ce qui n'en a pas |
 
 La forme courte (`/net-audit`, etc.) fonctionne aussi tant qu'aucune autre commande ne porte ce nom.
 

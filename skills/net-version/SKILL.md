@@ -26,4 +26,4 @@ bash "${CLAUDE_PLUGIN_ROOT}/scripts/topo-version.sh" use <version>   # sauvegard
    - montrer en deux ou trois lignes ce que le retour va défaire (diff avec la version visée) ;
    - lancer `use <version>` sans autre question : l'état courant est sauvegardé d'abord, le retour est donc toujours annulable ;
    - dire quelle version est active et le nom de la sauvegarde qui permet de revenir.
-5. Après un changement de version, la topologie lue plus tôt dans la session est périmée : la relire avant de s'en servir. Rappeler que le fichier décrit le réseau, il ne le modifie pas : si la version activée ne correspond plus au réel, proposer `/homelab-net:net-check`.
+5. Après un changement de version, la topologie lue plus tôt dans la session est périmée : la relire avant de s'en servir. Rappeler que le fichier décrit le réseau, il ne le modifie pas : si la version activée ne correspond plus au réel, proposer `/lab:net-check`.

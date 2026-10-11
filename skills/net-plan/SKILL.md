@@ -23,6 +23,6 @@ Produire un **plan**, rien d'autre : aucune modification n'est exécutée.
 5. **Accès distant et exposition** : ce qui change pour le VPN et le reverse proxy, s'il y a lieu.
 6. **Impact** : ce qui peut casser, coupures prévisibles, ce qui change pour les autres VLAN.
 7. **Ordre d'exécution** : étapes numérotées, chacune avec sa vérification (commande en lecture seule) et son retour arrière.
-8. **Mise à jour de `topology.md`** : les lignes à ajouter dans le fichier privé, par l'utilisateur ou via `/homelab-net:net-add` une fois le changement fait.
+8. **Mise à jour de `topology.md`** : les lignes à ajouter dans le fichier privé, par l'utilisateur ou via `/lab:net-add` une fois le changement fait.
 
 Chaque étape qui modifie une config reste une proposition : elle n'est exécutée qu'après validation explicite, étape par étape.

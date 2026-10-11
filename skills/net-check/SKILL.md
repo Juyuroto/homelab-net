@@ -5,7 +5,7 @@ description: Vérifie le fichier privé topology.md lui-même — contradictions
 
 # Vérification de la topologie
 
-Contrôle **du fichier**, pas du réseau : ne rien exécuter, ne rien modifier. Les risques de sécurité relèvent de `/homelab-net:net-audit`.
+Contrôle **du fichier**, pas du réseau : ne rien exécuter, ne rien modifier. Les risques de sécurité relèvent de `/lab:net-audit`.
 
 1. Lire `~/.claude/homelab-net/topology.md` en entier, sauf s'il a déjà été lu en entier dans cette session et n'a pas été modifié depuis.
    - Absent : le dire et expliquer comment le créer depuis `${CLAUDE_PLUGIN_ROOT}/templates/topology.example.md`.

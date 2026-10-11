@@ -22,7 +22,7 @@ Les règles du skill `reseau-homelab` s'appliquent : observation en lecture seul
 6. Poser **une seule question finale** avec `AskUserQuestion` : « Créer ? » — options `Oui, créer` et `Non`.
    - **Oui** : exécuter les commandes du récapitulatif, sans autre question, puis vérifier en lecture seule (`qm config`, `pct config`, `qm status`, `pct status`) et dire le résultat. Une commande qui échoue arrête la suite : montrer l'erreur, ne rien supprimer.
    - **Non** : ne rien exécuter, demander ce qu'il faut changer.
-7. Terminer en renvoyant vers `/homelab-net:net-add` pour inscrire la ressource dans la topologie, et lister ce qui reste à faire sur le réseau (réservation DHCP, DNS, règle de pare-feu).
+7. Terminer en renvoyant vers `/lab:net-add` pour inscrire la ressource dans la topologie, et lister ce qui reste à faire sur le réseau (réservation DHCP, DNS, règle de pare-feu).
 
 ## Accès à Proxmox
 
@@ -134,4 +134,4 @@ Jamais de mot de passe dans une commande (historique du shell, liste des process
 
 ## Autres créations
 
-Agir sur une ressource existante (démarrer, arrêter, modifier, snapshot, sauvegarde, suppression) : `/homelab-net:pve-manage`. Disque supplémentaire, pool : même démarche (questionner, récapituler, « Créer ? ») avec `qm`, `pct` ou `pvesh`. Un bridge ou un changement de `/etc/network/interfaces` peut couper l'accès à l'hyperviseur : suivre la section « Modifier » de [proxmox.md](../reseau-homelab/references/proxmox.md).
+Agir sur une ressource existante (démarrer, arrêter, modifier, snapshot, sauvegarde, suppression) : `/lab:pve-manage`. Disque supplémentaire, pool : même démarche (questionner, récapituler, « Créer ? ») avec `qm`, `pct` ou `pvesh`. Un bridge ou un changement de `/etc/network/interfaces` peut couper l'accès à l'hyperviseur : suivre la section « Modifier » de [proxmox.md](../reseau-homelab/references/proxmox.md).

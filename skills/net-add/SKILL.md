@@ -19,8 +19,8 @@ Ce skill ne modifie **que** le fichier `~/.claude/homelab-net/topology.md` (et e
 5. Montrer **toutes** les lignes à ajouter ou modifier, section par section. Un même élément apparaît souvent à plusieurs endroits (équipements ou hyperviseurs, ports du switch, plan d'adressage, services) : suivre les sections et les colonnes du fichier tel qu'il est, ne pas en imposer d'autres.
 6. Attendre la validation explicite, lancer `bash "${CLAUDE_PLUGIN_ROOT}/scripts/topo-version.sh" save` (garde l'état d'avant, modifications à la main comprises), puis écrire avec des modifications ciblées, sans réécrire le fichier.
 7. Relire le fichier pour confirmer que les lignes y sont. Si elles ont disparu, le fichier est probablement ouvert dans un éditeur qui l'a réenregistré : le dire, faire recharger, recommencer.
-8. Relancer `bash "${CLAUDE_PLUGIN_ROOT}/scripts/topo-version.sh" save` : chaque ajout laisse un dossier daté dans `~/.claude/homelab-net/versions/`. Donner son nom, et rappeler que `/homelab-net:net-version` permet de revenir en arrière.
+8. Relancer `bash "${CLAUDE_PLUGIN_ROOT}/scripts/topo-version.sh" save` : chaque ajout laisse un dossier daté dans `~/.claude/homelab-net/versions/`. Donner son nom, et rappeler que `/lab:net-version` permet de revenir en arrière.
 
 ## Ce que l'ajout implique sur le réseau
 
-Terminer par la liste de ce qui reste à faire **en vrai** pour que la topologie soit exacte : port du switch à configurer, réservation DHCP, règle de pare-feu, entrée DNS. Ce sont des propositions, rien n'est exécuté. Si l'élément demande un nouveau VLAN ou de nouvelles règles, renvoyer vers `/homelab-net:net-plan`.
+Terminer par la liste de ce qui reste à faire **en vrai** pour que la topologie soit exacte : port du switch à configurer, réservation DHCP, règle de pare-feu, entrée DNS. Ce sont des propositions, rien n'est exécuté. Si l'élément demande un nouveau VLAN ou de nouvelles règles, renvoyer vers `/lab:net-plan`.
