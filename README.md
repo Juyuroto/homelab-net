@@ -54,7 +54,6 @@ Donnez au jeton le rôle le plus étroit qui suffit (`PVEAuditor` pour observer,
 | `/homelab-net:net-audit` | Lit `topology.md` et liste les risques (exposition, segmentation, VPN trop large, services en `0.0.0.0`) par gravité, avec la correction proposée |
 | `/homelab-net:net-debug <symptôme>` | Dépannage guidé couche par couche : il lance lui-même les commandes de diagnostic en lecture seule et pose des questions |
 | `/homelab-net:net-plan <besoin>` | Plan d'intégration d'un besoin (ex. VLAN caméras) : VLAN, adressage, règles de pare-feu, impact |
-| `/homelab-net:net-diagram` | Schéma Mermaid de la topologie |
 | `/homelab-net:net-add <élément>` | Ajoute une machine ou un service à `topology.md` : IP libre proposée, conflits vérifiés, écriture après validation |
 | `/homelab-net:net-check` | Vérifie `topology.md` lui-même : contradictions entre sections, IP en double ou hors plage, références non déclarées, champs manquants |
 | `/homelab-net:pve-create <ressource>` | Prépare la création d'une VM, d'un conteneur LXC ou d'un clone sur Proxmox : VMID, IP, stockage et bridge/VLAN vérifiés, commande proposée, exécution après validation |
@@ -78,8 +77,7 @@ Le skill `reseau-homelab` se charge de lui-même dès qu'une question porte sur 
 - `topology.md` ou toute copie remplie du modèle ;
 - des IP, noms d'hôtes, noms de domaine, ports ou adresses MAC réels, y compris dans une issue, un exemple ou une capture d'écran ;
 - des exports de configuration (pfSense `config.xml`, `/etc/network/interfaces`, profils `.ovpn`) ;
-- des secrets : `.env`, clés et certificats VPN, clés de bouncer CrowdSec, tokens d'API ;
-- un schéma généré par `/net-diagram`.
+- des secrets : `.env`, clés et certificats VPN, clés de bouncer CrowdSec, tokens d'API.
 
 Le `.gitignore` bloque `topology.md`, `*.local.md`, `.env` et `proxmox.env`, mais ce n'est qu'un filet : relisez `git diff --staged` avant chaque commit. Dans ce dépôt, les exemples n'utilisent que `10.0.X.0/24`, les plages RFC 5737 (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`) et les noms `*.example.lan` / `*.example.com`.
 

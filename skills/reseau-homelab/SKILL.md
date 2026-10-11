@@ -43,7 +43,6 @@ Ne charger une référence que lorsque la question la concerne.
 - `/homelab-net:net-audit` — risques de la topologie, classés par gravité.
 - `/homelab-net:net-debug <symptôme>` — dépannage guidé couche par couche.
 - `/homelab-net:net-plan <besoin>` — intégrer un nouveau besoin.
-- `/homelab-net:net-diagram` — schéma Mermaid de la topologie.
 - `/homelab-net:net-add <élément>` — ajouter une machine ou un service à la topologie.
 - `/homelab-net:net-check` — contradictions et manques du fichier de topologie.
 - `/homelab-net:net-version [version]` — historique de la topologie, retour à une version précédente.

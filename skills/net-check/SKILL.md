@@ -17,7 +17,7 @@ Contrôle **du fichier**, pas du réseau : ne rien exécuter, ne rien modifier. 
    - **Câblage** : port du switch utilisé deux fois ; mode du port (access, trunk) incompatible avec le bridge de l'hyperviseur ; machine dans un VLAN que son port ne transporte pas.
    - **Structure** : section du modèle absente ; plus d'un tableau sous le titre contenant « VLAN » (le résumé de démarrage reprend tous les tableaux de cette section).
    - **Secrets** : tout ce qui ressemble à un mot de passe, une clé ou un token n'a rien à faire dans ce fichier.
-3. Relever les **manques** : cellules à `?` ou vides, et ce qu'ils empêchent — adresse d'écoute inconnue pour `net-audit`, port du switch inconnu pour `net-debug`, hôte d'une VM inconnu pour `net-diagram`.
+3. Relever les **manques** : cellules à `?` ou vides, et ce qu'ils empêchent — adresse d'écoute inconnue pour `net-audit`, port du switch inconnu pour `net-debug`.
 4. Entre deux valeurs qui se contredisent, **ne pas choisir** : citer les deux et demander laquelle est vraie. Seul l'utilisateur sait ce qui tourne réellement.
 
 ## Format de sortie
