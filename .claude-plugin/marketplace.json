@@ -1,0 +1,15 @@
+{
+  "name": "homelab-net",
+  "description": "Marketplace du plugin homelab-net : conception, audit et dépannage d'un réseau de homelab.",
+  "owner": {
+    "name": "Alain"
+  },
+  "plugins": [
+    {
+      "name": "homelab-net",
+      "source": "./",
+      "description": "Concevoir, auditer et dépanner un réseau de homelab (VLAN, pfSense, OpenVPN, Traefik/CrowdSec, Proxmox)."
+    }
+  ]
+}
+ 
