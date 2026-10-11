@@ -36,7 +36,7 @@ Même accès à Proxmox et mêmes règles que `pve-create` : l'observation se la
 
 ## Modèles de commande
 
-`qm` pour une VM, `pct` pour un conteneur ; les sous-commandes ci-dessous existent pour les deux sauf mention.
+`qm` pour une VM, `pct` pour un conteneur ; les sous-commandes ci-dessous existent pour les deux sauf mention. Leur équivalent par l'API est dans la section « Accès à Proxmox » de [pve-create](../pve-create/SKILL.md).
 
 ```bash
 # Observer (sans question)

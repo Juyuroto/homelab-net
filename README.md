@@ -32,6 +32,21 @@ Remplacez ensuite toutes les valeurs d'exemple par les vôtres. Gardez les titre
 
 Après installation par marketplace, le modèle se trouve dans le dossier du plugin sous `~/.claude/plugins/` ; le plus simple est de le copier depuis ce dépôt.
 
+## Accès à Proxmox
+
+`/pve-create`, `/pve-manage` et `/net-debug` joignent Proxmox par son API, avec un jeton que vous créez (Datacenter > Permissions > API Tokens) et rangez à côté de la topologie :
+
+```bash
+cat > ~/.claude/homelab-net/proxmox.env <<'EOF'
+PVE_HOST=pve1.example.lan
+PVE_TOKEN_ID=utilisateur@pve!jeton
+PVE_TOKEN_SECRET=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+EOF
+chmod 600 ~/.claude/homelab-net/proxmox.env
+```
+
+Donnez au jeton le rôle le plus étroit qui suffit (`PVEAuditor` pour observer, `PVEVMAdmin` pour créer et gérer). Sans `PVE_CACERT=/chemin/pve-root-ca.pem` dans ce fichier, le certificat du nœud n'est pas vérifié. Sans ce fichier, les commandes sont proposées et c'est vous qui les lancez.
+
 ## Commandes
 
 | Commande | Rôle |
@@ -66,7 +81,7 @@ Le skill `reseau-homelab` se charge de lui-même dès qu'une question porte sur 
 - des secrets : `.env`, clés et certificats VPN, clés de bouncer CrowdSec, tokens d'API ;
 - un schéma généré par `/net-diagram`.
 
-Le `.gitignore` bloque `topology.md`, `*.local.md` et `.env`, mais ce n'est qu'un filet : relisez `git diff --staged` avant chaque commit. Dans ce dépôt, les exemples n'utilisent que `10.0.X.0/24`, les plages RFC 5737 (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`) et les noms `*.example.lan` / `*.example.com`.
+Le `.gitignore` bloque `topology.md`, `*.local.md`, `.env` et `proxmox.env`, mais ce n'est qu'un filet : relisez `git diff --staged` avant chaque commit. Dans ce dépôt, les exemples n'utilisent que `10.0.X.0/24`, les plages RFC 5737 (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`) et les noms `*.example.lan` / `*.example.com`.
 
 ## Contribuer / mettre à jour
 

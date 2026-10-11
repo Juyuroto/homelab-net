@@ -46,4 +46,6 @@ Ne charger une référence que lorsque la question la concerne.
 - `/homelab-net:net-diagram` — schéma Mermaid de la topologie.
 - `/homelab-net:net-add <élément>` — ajouter une machine ou un service à la topologie.
 - `/homelab-net:net-check` — contradictions et manques du fichier de topologie.
+- `/homelab-net:net-version [version]` — historique de la topologie, retour à une version précédente.
 - `/homelab-net:pve-create <ressource>` — créer une VM, un conteneur ou un clone sur Proxmox.
+- `/homelab-net:pve-manage <action> <vmid>` — démarrer, arrêter, modifier, snapshotter, sauvegarder ou supprimer une VM ou un conteneur.

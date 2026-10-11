@@ -77,12 +77,21 @@ Règles flottantes : aucune. NAT sortant : automatique.
 | LAN | 1 | pass | ADMIN_HOSTS | MGMT net | 443, 22 | Administration |
 | LAN | 2 | block | LAN net | MGMT net | any | Pas d'accès gestion pour les autres |
 | LAN | 3 | pass | LAN net | any | any | Sortie générale |
-| DMZ | 1 | pass | 10.0.30.10 | 10.0.10.20 | 8080 | Proxy vers le backend |
-| DMZ | 2 | block | DMZ net | RFC1918 | any | Isolation de la DMZ |
-| DMZ | 3 | pass | DMZ net | any | PORTS_WEB | Mises à jour |
+| SERVEURS | 1 | pass | SERVEURS net | SERVEURS address | 53, 123 | DNS et NTP locaux |
+| SERVEURS | 2 | block | SERVEURS net | This Firewall | any | Pas d'accès à l'administration du pare-feu |
+| SERVEURS | 3 | block | SERVEURS net | RFC1918 | any | Rien d'initié vers les autres réseaux |
+| SERVEURS | 4 | pass | SERVEURS net | any | PORTS_WEB | Mises à jour |
+| DMZ | 1 | pass | DMZ net | DMZ address | 53, 123 | DNS et NTP locaux |
+| DMZ | 2 | pass | 10.0.30.10 | 10.0.10.20 | 8080 | Proxy vers le backend |
+| DMZ | 3 | block | DMZ net | This Firewall | any | Pas d'accès à l'administration du pare-feu |
+| DMZ | 4 | block | DMZ net | RFC1918 | any | Isolation de la DMZ |
+| DMZ | 5 | pass | DMZ net | any | PORTS_WEB | Mises à jour |
 | IOT | 1 | pass | IOT net | IOT address | 53, 123 | DNS et NTP locaux |
-| IOT | 2 | block | IOT net | RFC1918 | any | Isolation |
-| IOT | 3 | pass | IOT net | any | any | Internet seulement |
+| IOT | 2 | block | IOT net | This Firewall | any | Pas d'accès à l'administration du pare-feu |
+| IOT | 3 | block | IOT net | RFC1918 | any | Isolation |
+| IOT | 4 | pass | IOT net | any | any | Internet seulement |
+
+MGMT : aucune règle, rien n'est initié depuis ce réseau.
 
 NAT (port forward) : WAN 203.0.113.10 ports 80 et 443 → 10.0.30.10.
 
@@ -93,7 +102,7 @@ NAT (port forward) : WAN 203.0.113.10 ports 80 et 443 → 10.0.30.10.
 | Type | OpenVPN, accès distant, certificat + utilisateur |
 | Écoute | WAN, UDP 1194 |
 | Réseau tunnel | 10.0.200.0/24 |
-| Réseaux poussés | 10.0.10.0/24 |
+| Réseaux poussés | 10.0.10.0/24 ; 10.0.99.0/24 pour le profil admin seulement (Client Specific Override) |
 | Règles (onglet OpenVPN) | pass tunnel → 10.0.10.20 port 443 ; pass ADMIN (IP fixe 10.0.200.10) → MGMT net ; block le reste |
 
 | Certificat / utilisateur | IP tunnel | Accès |

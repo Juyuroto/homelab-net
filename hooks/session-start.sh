@@ -10,5 +10,5 @@ f="$HOME/.claude/homelab-net/topology.md"
   echo "VLANs :"
   # lignes de tableau de la section dont le titre contient « vlan », sans la ligne de séparation
   awk '/^## /{v = tolower($0) ~ /vlan/} v && /^\|/ && !/^\|[ :|-]+$/' "$f" | head -n 20
-} 2>/dev/null | head -c 2000
+} 2>/dev/null | head -c 2000 | iconv -c -f UTF-8 -t UTF-8 2>/dev/null # iconv retire un caractère coupé en deux par head
 exit 0

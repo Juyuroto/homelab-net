@@ -24,6 +24,36 @@ Les règles du skill `reseau-homelab` s'appliquent : observation en lecture seul
    - **Non** : ne rien exécuter, demander ce qu'il faut changer.
 7. Terminer en renvoyant vers `/homelab-net:net-add` pour inscrire la ressource dans la topologie, et lister ce qui reste à faire sur le réseau (réservation DHCP, DNS, règle de pare-feu).
 
+## Accès à Proxmox
+
+Par l'API, avec le jeton de `~/.claude/homelab-net/proxmox.env` (`PVE_HOST`, `PVE_TOKEN_ID`, `PVE_TOKEN_SECRET`). Ne jamais lire ni afficher ce fichier : tout passe par le script, qui garde le jeton hors de la commande.
+
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/pve-api.sh" GET /cluster/nextid
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/pve-api.sh" POST /nodes/<nœud>/lxc vmid=<ctid> hostname=<nom> ostemplate=<stockage>:vztmpl/<template>.tar.zst
+```
+
+Les commandes `qm` / `pct` de ce skill et de `pve-manage` restent la référence, et c'est elles que montre le récapitulatif ; elles ne s'exécutent telles quelles que dans un shell sur le nœud. Par l'API, chaque option `--x y` devient un paramètre `x=y` :
+
+| Commande | Appel d'API (`/nodes/<nœud>` devant, `qemu` → `lxc` pour un conteneur) |
+|----------|------------------------------------------------------------------------|
+| `qm list ; pct list` | `GET /cluster/resources type=vm` (sans préfixe) |
+| `qm create`, `pct create` | `POST /qemu`, `POST /lxc` (avec `vmid=`, et `ostemplate=` pour un conteneur) |
+| `qm clone` | `POST /qemu/<id>/clone newid=<vmid>` |
+| `qm config`, `qm set` | `GET`, `PUT /qemu/<id>/config` |
+| `qm status`, `start`, `shutdown`, `reboot`, `stop` | `GET /qemu/<id>/status/current`, `POST /qemu/<id>/status/<action>` |
+| `qm resize` | `PUT /qemu/<id>/resize disk=scsi0 size=+10G` |
+| `qm listsnapshot`, `snapshot`, `rollback`, `delsnapshot` | `GET`, `POST /qemu/<id>/snapshot snapname=<nom>`, `POST /qemu/<id>/snapshot/<nom>/rollback`, `DELETE /qemu/<id>/snapshot/<nom>` |
+| `qm migrate`, `qm destroy` | `POST /qemu/<id>/migrate target=<nœud>`, `DELETE /qemu/<id>` |
+| `vzdump` | `POST /vzdump vmid=<id> storage=<stockage> mode=snapshot compress=zstd` |
+| `pvesm status`, `pvesm list` | `GET /storage`, `GET /storage/<stockage>/content` |
+| `pveam available`, `pveam download` | `GET /aplinfo`, `POST /aplinfo storage=<stockage> template=<template>` |
+| `ip -d link show vmbr0` | `GET /network` (`bridge_vlan_aware`) |
+
+- Une clé SSH se passe par son contenu, pas par un chemin (`ssh-public-keys=<contenu>` ; pour `sshkeys` d'une VM, contenu encodé URL).
+- Création, clone, sauvegarde et migration renvoient un identifiant de tâche (UPID) : suivre `GET /nodes/<nœud>/tasks/<upid>/status` jusqu'à `stopped` avant de dire le résultat.
+- Pas de `proxmox.env` ou nœud injoignable : le dire et donner les commandes `qm` / `pct` à l'utilisateur. Ne pas chercher un autre accès.
+
 ## Questionnaire
 
 Poser les questions avec l'outil **`AskUserQuestion`** (menu de choix à l'écran), pas en liste de texte : 4 questions par appel, 2 à 4 options chacune, la valeur recommandée en premier, tirée de la topologie ou des commandes d'observation. L'utilisateur tape une valeur libre via « Other ». Ne retomber sur une liste numérotée que si l'outil n'est pas disponible.
