@@ -48,7 +48,7 @@ Les commandes `qm` / `pct` de ce skill et de `pve-manage` restent la référence
 | `vzdump` | `POST /vzdump vmid=<id> storage=<stockage> mode=snapshot compress=zstd` |
 | `pvesm status`, `pvesm list` | `GET /storage`, `GET /storage/<stockage>/content` |
 | `pveam available`, `pveam download` | `GET /aplinfo`, `POST /aplinfo storage=<stockage> template=<template>` |
-| `ip -d link show vmbr0` | `GET /network` (`bridge_vlan_aware`) |
+| `ip -d link show vmbr0` | `GET /network` (`bridge_vlan_aware`, absent si le bridge ne l'est pas) |
 
 - Une clé SSH se passe par son contenu, pas par un chemin (`ssh-public-keys=<contenu>` ; pour `sshkeys` d'une VM, contenu encodé URL).
 - Création, clone, sauvegarde et migration renvoient un identifiant de tâche (UPID) : suivre `GET /nodes/<nœud>/tasks/<upid>/status` jusqu'à `stopped` avant de dire le résultat.

@@ -1,0 +1,5 @@
+# Jamais de topologie réelle ni de secret dans ce repo public
+topology.md
+*.local.md
+.env
+proxmox.env
