@@ -1,6 +1,6 @@
 {
   "name": "homelab-net",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Concevoir, auditer et dépanner un réseau de homelab (VLAN, pfSense, OpenVPN, Traefik/CrowdSec, Proxmox). Aucune modification sans validation.",
   "author": {
     "name": "Alain"

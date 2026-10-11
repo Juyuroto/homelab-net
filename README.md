@@ -59,6 +59,8 @@ Donnez au jeton le rôle le plus étroit qui suffit (`PVEAuditor` pour observer,
 | `/homelab-net:pve-create <ressource>` | Prépare la création d'une VM, d'un conteneur LXC ou d'un clone sur Proxmox : VMID, IP, stockage et bridge/VLAN vérifiés, commande proposée, exécution après validation |
 | `/homelab-net:pve-manage <action> <vmid>` | Agit sur une VM ou un conteneur existant : démarrer, arrêter, modifier, snapshot, sauvegarde, migration, suppression. Récapitulatif puis exécution après validation |
 | `/homelab-net:net-version [version]` | Historique de `topology.md` : lister les versions datées, en enregistrer une, comparer, revenir à une version précédente |
+| `/homelab-net:net-fw <source> -> <destination>:<port>` | Simule un flux contre les règles pfSense de la topologie : passe ou bloqué, avec la règle qui décide |
+| `/homelab-net:net-backup` | Vérifie que Proxmox, pfSense et la topologie ont une sauvegarde récente, et liste ce qui n'en a pas |
 
 La forme courte (`/net-audit`, etc.) fonctionne aussi tant qu'aucune autre commande ne porte ce nom.
 
