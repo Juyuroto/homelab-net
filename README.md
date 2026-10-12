@@ -59,6 +59,7 @@ chmod 600 ~/.claude/homelab-net/proxmox.env
 | `/lab:net-audit` | Risques de la topologie (exposition, segmentation, VPN trop large…), par gravité |
 | `/lab:net-debug <symptôme>` | Dépannage couche par couche, diagnostic en lecture seule |
 | `/lab:net-plan <besoin>` | Plan d'intégration d'un besoin (ex. VLAN caméras) : adressage, pare-feu, impact |
+| `/lab:net-conseil [besoin]` | Conseil d'évolution : quoi installer et sur quelle machine, quoi réutiliser, retirer ou acheter d'occasion |
 | `/lab:net-add <élément>` | Ajoute une machine ou un service à `topology.md` |
 | `/lab:net-check` | Contrôle `topology.md` : contradictions, IP en double, références manquantes |
 | `/lab:net-fw <source> -> <destination>:<port>` | Simule un flux contre les règles pfSense : passe ou bloqué, et pourquoi |

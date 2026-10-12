@@ -3,3 +3,4 @@ topology.md
 *.local.md
 .env
 proxmox.env
+SSH-CLAUDE.md

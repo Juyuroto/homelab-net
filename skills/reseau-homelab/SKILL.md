@@ -43,6 +43,7 @@ Ne charger une référence que lorsque la question la concerne.
 - `/lab:net-audit` — risques de la topologie, classés par gravité.
 - `/lab:net-debug <symptôme>` — dépannage guidé couche par couche.
 - `/lab:net-plan <besoin>` — intégrer un nouveau besoin.
+- `/lab:net-conseil [besoin]` — quoi installer et où, quoi réutiliser, retirer ou acheter d'occasion.
 - `/lab:net-add <élément>` — ajouter une machine ou un service à la topologie.
 - `/lab:net-check` — contradictions et manques du fichier de topologie.
 - `/lab:net-version [version]` — historique de la topologie, retour à une version précédente.
